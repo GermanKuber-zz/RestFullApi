@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -26,15 +27,25 @@ namespace Community.APi.Controllers
         }
         [Route("Communitys", Name = "CommunitysList")]
         [HttpGet]
-        public async Task<IHttpActionResult> Get(string sort = "id", int page = 1, int pageSize = MaxPageSize)
+        public async Task<IHttpActionResult> Get(string sort = "id", string fields = null,int page = 1, int pageSize = MaxPageSize)
         {
             try
             {
-                //TODO: Paso 9 - 2 - Paginacion
+                //TODO: Paso 10 - 2 - Seleccionar Campos individuales - Se agrega field los campos se pasan separados por coma
 
-                //Ejemplo : api/communitys?sort=email&page=1&pagesize=2
-     
+                //Ejemplo : /api/Communitys?fields=name'
+                //Ejemplo : /api/Communitys?fields=name%2Cid' (se pasan name y id)
+
                 var users = await this._communityService.GetAllAsync();
+
+                List<string> lstOfFields = new List<string>();
+
+                // we should include expenses when the fields-string contains "expenses", or "expenses.id", …
+                if (fields != null)
+                {
+                    lstOfFields = fields.ToLower().Split(',').ToList();
+                    
+                }
 
 
                 // Limito el maximo
@@ -82,7 +93,7 @@ namespace Community.APi.Controllers
                           .Skip(pageSize * (page - 1))
                           .Take(pageSize)
                           .ToList()
-                          .Select(CommunityMapper.Map));
+                          .Select(x=> CommunityMapper.MapObject(x, lstOfFields)));
 
             }
             catch (Exception)

@@ -1,4 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using System.Reflection;
+using AutoMapper;
 using Community.Core;
 using Community.ViewModel.Request;
 
@@ -40,6 +45,8 @@ namespace Community.Mapper
             CommunityTag user = mapper.DefaultContext.Mapper.Map<CommunityTagViewModel, CommunityTag>(from, to);
             return to;
         }
+
+
 
     }
 }

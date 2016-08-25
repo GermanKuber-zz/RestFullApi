@@ -28,7 +28,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-                //TODO: Paso 9 - 1 - Paginacion
+               
 
                 //Ejemplo : api/users?sort=email&page=1&pagesize=2
                 //api/users?sort=name
