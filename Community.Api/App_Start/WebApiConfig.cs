@@ -34,7 +34,7 @@ namespace Community.APi
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver
                 = new CamelCasePropertyNamesContractResolver();
 
-            //TODO: Paso 5 - 3 - Se Implementa Patch
+       
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(
           new MediaTypeHeaderValue("application/json-patch+json"));
 

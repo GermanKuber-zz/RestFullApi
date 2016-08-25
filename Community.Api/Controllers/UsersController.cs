@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Community.Core.Interfaces.Services;
@@ -94,7 +95,6 @@ namespace Community.APi.Controllers
         [HttpPatch]
         public async Task<IHttpActionResult> Patch(PatchViewModel model)
         {
-            //TODO: Paso 5 - 1 - Se Implementa Patch
             try
             {
                 if (model == null)
@@ -132,6 +132,29 @@ namespace Community.APi.Controllers
             }
         }
 
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            try
+            {
+                //TODO: Paso 6 - 1 - Se Implementa Delete
+                var result =await  _userService.DeleteAsync(id);
 
+                if (result.Status == ActionStatus.Deleted)
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else if (result.Status ==  ActionStatus.NotFound)
+                {
+                    return NotFound();
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+        }
     }
 }

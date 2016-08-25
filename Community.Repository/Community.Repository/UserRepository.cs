@@ -9,9 +9,7 @@ namespace Community.Repository
     {
         public UserRepository(ICommunityContext context) : base(context)
         {
-        }
 
- 
-    
+        }
     }
 }
