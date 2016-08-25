@@ -45,7 +45,28 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-     
+        [HttpPost]
+        public async Task<IHttpActionResult> Post(UserViewModel model)
+        {
+            try
+            {
+                if (model == null)
+                    return BadRequest();
+
+                var user = UserMapper.Map(model);
+
+                var userUpdate = await this._userService.InserAsync(user);
+                if (userUpdate.Status == ActionStatus.Created)
+                    return Created(Request.RequestUri + "/" + userUpdate.Entity.Id
+                        , UserMapper.Map(userUpdate.Entity));
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
 
 
     }
