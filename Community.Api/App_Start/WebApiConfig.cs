@@ -8,6 +8,7 @@ using Community.Repository;
 using Community.Repository.Context;
 using Community.Service;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.Application;
 
 namespace Community.APi
