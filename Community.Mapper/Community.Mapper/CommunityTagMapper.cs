@@ -48,13 +48,10 @@ namespace Community.Mapper
 
         public static object MapObject(CommunityTagViewModel tag, List<string> lstOfFields)
         {
-
-            //TODO: Paso 10 - 4 - Seleccionar Campos individuales 
             if (!lstOfFields.Any())
                 return tag;
             else
             {
-
                 ExpandoObject objectToReturn = new ExpandoObject();
                 foreach (var field in lstOfFields)
                 {

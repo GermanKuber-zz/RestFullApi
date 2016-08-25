@@ -31,8 +31,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-                //TODO: Paso 10 - 2 - Seleccionar Campos individuales - Se agrega field los campos se pasan separados por coma
-
+                
                 //Ejemplo : /api/Communitys?fields=name'
                 //Ejemplo : /api/Communitys?fields=name%2Cid' (se pasan name y id)
                 //Ejemplo : /api/Communitys?fields=tags' (Propiedad completa de tag)

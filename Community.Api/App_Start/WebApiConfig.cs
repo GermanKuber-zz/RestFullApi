@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
+using CacheCow.Server;
 using Community.APi.IOC;
 using Community.Core.Interfaces.Context;
 using Community.Core.Interfaces.Repositorys;
@@ -48,7 +49,8 @@ namespace Community.APi
             container.RegisterType<ICommunityContext, CommunityContext>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
-
+            //TODO: Paso 11 - 1 - Cache - Instalo : CacheCow.Server
+            config.MessageHandlers.Add(new CachingHandler(config));
             return config;
 
         }

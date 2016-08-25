@@ -1,18 +1,9 @@
 # RestFullApi
 Se construye una api rest , segura , capas de ser utilizado por múltiples clientes.
 
-#Paso 5 - Se implementa Patch
+#Paso 11 - Cache
 
 ##Modelo de Request
 ```json
-{
-  "id": 125,
-  "model":  [
-      {
-        "value": "Nuevo Nombre",
-        "path": "/name",
-        "op": "replace",
-        "from": "string"
-      }
-    ]  
-}```
+If-None-Match: W/"2f8e9e59838c4ab8af8d6b73d1e3cbe1"
+```

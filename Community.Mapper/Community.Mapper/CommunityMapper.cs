@@ -49,7 +49,6 @@ namespace Community.Mapper
         }
         public static object MapObject(CommunityViewModel community, List<string> lstOfFields)
         {
-            //TODO: Paso 10 - 1 - Seleccionar Campos individuales
             List<string> lstOfFieldsToWorkWith = new List<string>(lstOfFields);
 
             if (!lstOfFieldsToWorkWith.Any())
