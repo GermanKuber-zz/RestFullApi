@@ -5,7 +5,6 @@ using Community.Core.Interfaces.Services;
 using Community.Core.Results;
 using Community.Mapper;
 using Community.ViewModel.Request;
-using Marvin.JsonPatch;
 
 namespace Community.APi.Controllers
 {
@@ -67,8 +66,29 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
+        [HttpPut]
+        public async Task<IHttpActionResult> Put(int id, [FromBody]UserViewModel model)
+        {
+            try
+            {
+                if (model == null)
+                    return BadRequest();
 
+                var userDb = UserMapper.Map(model);
 
+                var result = await _userService.UpdateAsync(userDb);
+                if (result.Status == ActionStatus.Updated)
+                    return Ok(UserMapper.Map(result.Entity));
+                else if (result.Status == ActionStatus.NotFound)
+                    return NotFound();
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
     }
 
 }
