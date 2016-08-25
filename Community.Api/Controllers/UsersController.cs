@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Community.APi.Helpers;
 using Community.Core.Interfaces.Services;
 using Community.Core.Results;
 using Community.Mapper;
@@ -18,6 +19,28 @@ namespace Community.APi.Controllers
         public UsersController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        public async Task<IHttpActionResult> Get(string sort = "id")
+        {
+            try
+            {
+                //TODO: Paso 8 - 2 - Ordenamiento - Implemento metodo de busqueda
+                //Ejemplo : /api/users?sort=-email
+                //api/users?sort=name
+                var users = await this._userService.GetAllAsync();
+          
+                 return Ok(users
+                    .ApplySort(sort)
+                    .Take(25)
+                    .ToList()
+                    .Select(UserMapper.Map));
+          
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }
 
         public async Task<IHttpActionResult> Get(int id)
@@ -152,7 +175,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-                //TODO: Paso 7 - 1 - Uri de recursos
+              
                 var user = await this._userService.GetByIdAsync(id);
                 if (user == null)
                     return NotFound();

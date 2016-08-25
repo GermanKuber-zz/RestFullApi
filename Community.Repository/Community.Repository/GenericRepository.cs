@@ -45,7 +45,11 @@ namespace Community.Repository
                 return await query.ToListAsync();
             }
         }
-
+        public virtual async Task<IQueryable<TEntity>> GetAllAsync()
+        {
+            //TODO: Paso 8 - 3 - Ordenamiento - Retorno IQueryable
+            return DbSet;
+        }
         public virtual Task<TEntity> GetByIdAsync(object id)
         {
             return DbSet.FindAsync(id);

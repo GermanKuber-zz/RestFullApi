@@ -157,8 +157,7 @@ namespace Community.APi.Controllers
                 if (db == null)
                     return NotFound();
 
-                //TODO: Paso 7 - 3 - Uri de recursos - 
-                var results = db.Tags?
+               var results = db.Tags?
                     .ToList()
                     .Select(x =>
                     {

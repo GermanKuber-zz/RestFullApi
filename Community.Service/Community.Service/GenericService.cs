@@ -44,6 +44,11 @@ namespace Community.Service
             }
         }
 
+        public Task<IQueryable<TEntity>> GetAllAsync()
+        {
+            return this._genericRepository.GetAllAsync();
+        }
+
         public virtual async Task<ActionResult<TEntity>> DeleteAsync(object id)
         {
 

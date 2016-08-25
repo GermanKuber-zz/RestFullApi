@@ -15,5 +15,6 @@ namespace Community.Core.Interfaces.Repositorys
         void Insert(TEntity entity);
         void Update(TEntity entityToUpdate);
         Task<int> SaveAsync();
+        Task<IQueryable<TEntity>> GetAllAsync();
     }
 }
