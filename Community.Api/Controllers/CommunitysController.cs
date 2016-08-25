@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Routing;
+using Community.APi.Helpers;
 using Community.Core.Interfaces.Services;
 using Community.Core.Results;
 using Community.Mapper;
@@ -14,12 +17,78 @@ namespace Community.APi.Controllers
     public class CommunitysController : ApiController
     {
         private readonly ICommunityService _communityService;
-
+        const int MaxPageSize = 10;
 
         public CommunitysController(ICommunityService communityService)
         {
             _communityService = communityService;
 
+        }
+        [Route("Communitys", Name = "CommunitysList")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get(string sort = "id", int page = 1, int pageSize = MaxPageSize)
+        {
+            try
+            {
+                //TODO: Paso 9 - 2 - Paginacion
+
+                //Ejemplo : api/communitys?sort=email&page=1&pagesize=2
+     
+                var users = await this._communityService.GetAllAsync();
+
+
+                // Limito el maximo
+                if (pageSize > MaxPageSize)
+                    pageSize = MaxPageSize;
+
+
+                // calculo paginas
+                var totalCount = users.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+                var urlHelper = new UrlHelper(Request);
+                var prevLink = page > 1 ? urlHelper.Link("CommunitysList",
+                    new
+                    {
+                        page = page - 1,
+                        pageSize = pageSize,
+                        sort = sort
+                    }) : "";
+                var nextLink = page < totalPages ? urlHelper.Link("CommunitysList",
+                    new
+                    {
+                        page = page + 1,
+                        pageSize = pageSize,
+                        sort = sort
+                    }) : "";
+
+
+                var paginationHeader = new
+                {
+                    currentPage = page,
+                    pageSize = pageSize,
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+                    previousPageLink = prevLink,
+                    nextPageLink = nextLink
+                };
+
+                HttpContext.Current.Response.Headers.Add("X-Pagination",
+                   Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
+
+
+                return Ok(users
+                          .ApplySort(sort)
+                          .Skip(pageSize * (page - 1))
+                          .Take(pageSize)
+                          .ToList()
+                          .Select(CommunityMapper.Map));
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }
 
         public async Task<IHttpActionResult> Get(int id)

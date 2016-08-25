@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using Community.APi.Helpers;
 using Community.Core.Interfaces.Services;
 using Community.Core.Results;
@@ -15,27 +17,71 @@ namespace Community.APi.Controllers
     public class UsersController : ApiController
     {
         private readonly IUserService _userService;
-
+        const int MaxPageSize = 10;
         public UsersController(IUserService userService)
         {
             _userService = userService;
         }
-
-        public async Task<IHttpActionResult> Get(string sort = "id")
+        [Route("users", Name = "UserList")]
+        [HttpGet]
+        public async Task<IHttpActionResult> Get(string sort = "id", int page = 1, int pageSize = MaxPageSize)
         {
             try
             {
-                //TODO: Paso 8 - 2 - Ordenamiento - Implemento metodo de busqueda
-                //Ejemplo : /api/users?sort=-email
+                //TODO: Paso 9 - 1 - Paginacion
+
+                //Ejemplo : api/users?sort=email&page=1&pagesize=2
                 //api/users?sort=name
                 var users = await this._userService.GetAllAsync();
-          
-                 return Ok(users
-                    .ApplySort(sort)
-                    .Take(25)
-                    .ToList()
-                    .Select(UserMapper.Map));
-          
+
+
+                // Limito el maximo
+                if (pageSize > MaxPageSize)
+                    pageSize = MaxPageSize;
+
+
+                // calculo paginas
+                var totalCount = users.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+                var urlHelper = new UrlHelper(Request);
+                var prevLink = page > 1 ? urlHelper.Link("UserList",
+                    new
+                    {
+                        page = page - 1,
+                        pageSize = pageSize,
+                        sort = sort
+                    }) : "";
+                var nextLink = page < totalPages ? urlHelper.Link("UserList",
+                    new
+                    {
+                        page = page + 1,
+                        pageSize = pageSize,
+                        sort = sort
+                    }) : "";
+
+
+                var paginationHeader = new
+                {
+                    currentPage = page,
+                    pageSize = pageSize,
+                    totalCount = totalCount,
+                    totalPages = totalPages,
+                    previousPageLink = prevLink,
+                    nextPageLink = nextLink
+                };
+
+                HttpContext.Current.Response.Headers.Add("X-Pagination",
+                   Newtonsoft.Json.JsonConvert.SerializeObject(paginationHeader));
+
+
+                return Ok(users
+                          .ApplySort(sort)
+                          .Skip(pageSize * (page - 1))
+                          .Take(pageSize)
+                          .ToList()
+                          .Select(UserMapper.Map));
+
             }
             catch (Exception)
             {
@@ -52,7 +98,7 @@ namespace Community.APi.Controllers
                     return NotFound();
 
                 return Ok(UserMapper.Map(user));
-                
+
             }
             catch (Exception ex)
             {
@@ -150,7 +196,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-            
+
                 var result = await _userService.DeleteAsync(id);
 
                 if (result.Status == ActionStatus.Deleted)
@@ -175,7 +221,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-              
+
                 var user = await this._userService.GetByIdAsync(id);
                 if (user == null)
                     return NotFound();
