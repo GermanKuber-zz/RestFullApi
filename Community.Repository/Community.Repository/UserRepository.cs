@@ -1,6 +1,7 @@
 ﻿using Community.Core;
 using Community.Core.Interfaces.Context;
 using Community.Core.Interfaces.Repositorys;
+using Community.Repository.Context;
 
 namespace Community.Repository
 {

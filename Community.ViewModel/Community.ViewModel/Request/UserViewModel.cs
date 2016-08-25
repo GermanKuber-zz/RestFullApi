@@ -1,4 +1,6 @@
-﻿namespace Community.ViewModel.Request
+﻿using System.Collections.Generic;
+
+namespace Community.ViewModel.Request
 {
     public class UserViewModel
     {
