@@ -88,7 +88,50 @@ namespace Community.APi.Controllers
             {
                 return InternalServerError();
             }
-        }
-    }
 
+        }
+
+        [HttpPatch]
+        public async Task<IHttpActionResult> Patch(PatchViewModel model)
+        {
+            //TODO: Paso 5 - 1 - Se Implementa Patch
+            try
+            {
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+
+                var userDb = await _userService.GetByIdAsync(model.Id);
+                if (userDb == null)
+                {
+                    return NotFound();
+                }
+
+           
+                var userViewModel = UserMapper.Map(userDb);
+
+               
+                model.Model.ApplyTo(userViewModel);
+
+                
+                var result = await _userService.UpdateAsync(UserMapper.Map(userViewModel, userDb));
+
+                if (result.Status == ActionStatus.Updated)
+                {
+                  
+                    var returnMapper = UserMapper.Map(result.Entity);
+                    return Ok(returnMapper);
+                }
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+
+    }
 }
