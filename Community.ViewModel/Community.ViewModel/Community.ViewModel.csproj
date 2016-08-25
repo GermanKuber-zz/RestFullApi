@@ -45,9 +45,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\CommunityTagViewModel.cs" />
+    <Compile Include="Request\CommunityTagWithCommunitysViewModel.cs" />
     <Compile Include="Request\CommunityViewModel.cs" />
-    <Compile Include="Request\PatchViewModel.cs" />
+    <Compile Include="Request\PatchCommunityTagViewModel.cs" />
+    <Compile Include="Request\PatchCommunityViewModel.cs" />
+    <Compile Include="Request\PatchUserViewModel.cs" />
+    <Compile Include="Request\PatchViewModelBase.cs" />
     <Compile Include="Request\UserViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Community.Core\Community.Core\Community.Core.csproj">
+      <Project>{13E1310C-2F5C-40EF-9FBA-FF729512AB0C}</Project>
+      <Name>Community.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

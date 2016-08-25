@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -9,6 +10,7 @@ using Community.ViewModel.Request;
 
 namespace Community.APi.Controllers
 {
+    [RoutePrefix("api")]
     public class UsersController : ApiController
     {
         private readonly IUserService _userService;
@@ -18,17 +20,6 @@ namespace Community.APi.Controllers
             _userService = userService;
         }
 
-        public IHttpActionResult Get()
-        {
-            try
-            {
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-        }
         public async Task<IHttpActionResult> Get(int id)
         {
             try
@@ -38,7 +29,7 @@ namespace Community.APi.Controllers
                     return NotFound();
 
                 return Ok(UserMapper.Map(user));
-
+                
             }
             catch (Exception ex)
             {
@@ -93,7 +84,7 @@ namespace Community.APi.Controllers
         }
 
         [HttpPatch]
-        public async Task<IHttpActionResult> Patch(PatchViewModel model)
+        public async Task<IHttpActionResult> Patch(PatchUserViewModel model)
         {
             try
             {
@@ -108,18 +99,18 @@ namespace Community.APi.Controllers
                     return NotFound();
                 }
 
-           
+
                 var userViewModel = UserMapper.Map(userDb);
 
-               
+
                 model.Model.ApplyTo(userViewModel);
 
-                
+
                 var result = await _userService.UpdateAsync(UserMapper.Map(userViewModel, userDb));
 
                 if (result.Status == ActionStatus.Updated)
                 {
-                  
+
                     var returnMapper = UserMapper.Map(result.Entity);
                     return Ok(returnMapper);
                 }
@@ -136,14 +127,14 @@ namespace Community.APi.Controllers
         {
             try
             {
-                //TODO: Paso 6 - 1 - Se Implementa Delete
-                var result =await  _userService.DeleteAsync(id);
+            
+                var result = await _userService.DeleteAsync(id);
 
                 if (result.Status == ActionStatus.Deleted)
                 {
                     return StatusCode(HttpStatusCode.NoContent);
                 }
-                else if (result.Status ==  ActionStatus.NotFound)
+                else if (result.Status == ActionStatus.NotFound)
                 {
                     return NotFound();
                 }
@@ -155,6 +146,29 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
 
+        }
+        [Route("users/{id}/Communitys")]
+        public async Task<IHttpActionResult> GetCommunitys(int id)
+        {
+            try
+            {
+                //TODO: Paso 7 - 1 - Uri de recursos
+                var user = await this._userService.GetByIdAsync(id);
+                if (user == null)
+                    return NotFound();
+
+
+                var results = user.Communitys?
+                    .ToList()
+                    .Select(CommunityMapper.Map);
+
+                return Ok(results);
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
         }
     }
 }
