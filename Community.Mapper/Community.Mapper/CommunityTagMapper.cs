@@ -46,7 +46,28 @@ namespace Community.Mapper
             return to;
         }
 
+        public static object MapObject(CommunityTagViewModel tag, List<string> lstOfFields)
+        {
 
+            //TODO: Paso 10 - 4 - Seleccionar Campos individuales 
+            if (!lstOfFields.Any())
+                return tag;
+            else
+            {
 
+                ExpandoObject objectToReturn = new ExpandoObject();
+                foreach (var field in lstOfFields)
+                {
+
+                    var fieldValue = tag.GetType()
+                        .GetProperty(field, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)
+                        .GetValue(tag, null);
+
+                    ((IDictionary<String, Object>)objectToReturn).Add(field, fieldValue);
+                }
+
+                return objectToReturn;
+            }
+        }
     }
 }

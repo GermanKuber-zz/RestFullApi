@@ -57,6 +57,10 @@
       <Project>{13E1310C-2F5C-40EF-9FBA-FF729512AB0C}</Project>
       <Name>Community.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Community.Helper\Community.Helper\Community.Helper.csproj">
+      <Project>{8f2e0c26-6873-4f77-87eb-99eae78e6cde}</Project>
+      <Name>Community.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Community.ViewModel\Community.ViewModel\Community.ViewModel.csproj">
       <Project>{CF7B4370-5B93-48CB-9532-3E95CF617D86}</Project>
       <Name>Community.ViewModel</Name>

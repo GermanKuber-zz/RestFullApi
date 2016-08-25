@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
-using Community.APi.Helpers;
 using Community.Core.Interfaces.Services;
 using Community.Core.Results;
+using Community.Helper;
 using Community.Mapper;
 using Community.ViewModel.Request;
 
@@ -35,17 +35,14 @@ namespace Community.APi.Controllers
 
                 //Ejemplo : /api/Communitys?fields=name'
                 //Ejemplo : /api/Communitys?fields=name%2Cid' (se pasan name y id)
+                //Ejemplo : /api/Communitys?fields=tags' (Propiedad completa de tag)
 
                 var users = await this._communityService.GetAllAsync();
 
                 List<string> lstOfFields = new List<string>();
 
-                // we should include expenses when the fields-string contains "expenses", or "expenses.id", …
                 if (fields != null)
-                {
                     lstOfFields = fields.ToLower().Split(',').ToList();
-                    
-                }
 
 
                 // Limito el maximo
@@ -63,14 +60,16 @@ namespace Community.APi.Controllers
                     {
                         page = page - 1,
                         pageSize = pageSize,
-                        sort = sort
+                        sort = sort,
+                        fields=fields
                     }) : "";
                 var nextLink = page < totalPages ? urlHelper.Link("CommunitysList",
                     new
                     {
                         page = page + 1,
                         pageSize = pageSize,
-                        sort = sort
+                        sort = sort,
+                        fields = fields
                     }) : "";
 
 
@@ -93,7 +92,7 @@ namespace Community.APi.Controllers
                           .Skip(pageSize * (page - 1))
                           .Take(pageSize)
                           .ToList()
-                          .Select(x=> CommunityMapper.MapObject(x, lstOfFields)));
+                          .Select(x=> CommunityMapper.MapObject(CommunityMapper.Map(x), lstOfFields)));
 
             }
             catch (Exception)

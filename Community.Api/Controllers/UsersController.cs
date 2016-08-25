@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Routing;
-using Community.APi.Helpers;
 using Community.Core.Interfaces.Services;
 using Community.Core.Results;
+using Community.Helper;
 using Community.Mapper;
 using Community.ViewModel.Request;
 

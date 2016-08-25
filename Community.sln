@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.Mapper", "Communi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.Service", "Community.Service\Community.Service\Community.Service.csproj", "{4EED9CFA-910F-4C8E-9AA2-6B3F9037A74B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.Helper", "Community.Helper\Community.Helper\Community.Helper.csproj", "{8F2E0C26-6873-4F77-87EB-99EAE78E6CDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{4EED9CFA-910F-4C8E-9AA2-6B3F9037A74B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EED9CFA-910F-4C8E-9AA2-6B3F9037A74B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EED9CFA-910F-4C8E-9AA2-6B3F9037A74B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2E0C26-6873-4F77-87EB-99EAE78E6CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2E0C26-6873-4F77-87EB-99EAE78E6CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2E0C26-6873-4F77-87EB-99EAE78E6CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2E0C26-6873-4F77-87EB-99EAE78E6CDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
