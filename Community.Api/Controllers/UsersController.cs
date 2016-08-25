@@ -216,8 +216,33 @@ namespace Community.APi.Controllers
             }
 
         }
-        [Route("users/{id}/Communitys")]
+        //TODO: Paso 12 - 6 - Implementamos el nuevo  RouteFactoryAttribute
+        [VersionedRoute("users/{id}/Communitys", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
+        {
+            try
+            {
+
+                var user = await this._userService.GetByIdAsync(id);
+                if (user == null)
+                    return NotFound();
+
+
+                var results = user.Communitys?
+                    .ToList()
+                    .Select(CommunityMapper.Map);
+
+                return Ok(results);
+
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+        //TODO: Paso 12 - 7 - Implementamos el nuevo  RouteFactoryAttribute
+        [VersionedRoute("users/{id}/Communitys", 2)]
+        public async Task<IHttpActionResult> GetCommunitysV2(int id)
         {
             try
             {

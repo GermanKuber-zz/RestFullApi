@@ -49,7 +49,7 @@ namespace Community.APi
             container.RegisterType<ICommunityContext, CommunityContext>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
-            //TODO: Paso 11 - 1 - Cache - Instalo : CacheCow.Server
+           
             config.MessageHandlers.Add(new CachingHandler(config));
             return config;
 

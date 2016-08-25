@@ -27,11 +27,11 @@ namespace Community.APi.Controllers
         }
         [Route("Communitys", Name = "CommunitysList")]
         [HttpGet]
-        public async Task<IHttpActionResult> Get(string sort = "id", string fields = null,int page = 1, int pageSize = MaxPageSize)
+        public async Task<IHttpActionResult> Get(string sort = "id", string fields = null, int page = 1, int pageSize = MaxPageSize)
         {
             try
             {
-                
+
                 //Ejemplo : /api/Communitys?fields=name'
                 //Ejemplo : /api/Communitys?fields=name%2Cid' (se pasan name y id)
                 //Ejemplo : /api/Communitys?fields=tags' (Propiedad completa de tag)
@@ -60,7 +60,7 @@ namespace Community.APi.Controllers
                         page = page - 1,
                         pageSize = pageSize,
                         sort = sort,
-                        fields=fields
+                        fields = fields
                     }) : "";
                 var nextLink = page < totalPages ? urlHelper.Link("CommunitysList",
                     new
@@ -91,7 +91,7 @@ namespace Community.APi.Controllers
                           .Skip(pageSize * (page - 1))
                           .Take(pageSize)
                           .ToList()
-                          .Select(x=> CommunityMapper.MapObject(CommunityMapper.Map(x), lstOfFields)));
+                          .Select(x => CommunityMapper.MapObject(CommunityMapper.Map(x), lstOfFields)));
 
             }
             catch (Exception)
@@ -205,7 +205,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-            
+
                 var result = await _communityService.DeleteAsync(id);
 
                 if (result.Status == ActionStatus.Deleted)
@@ -225,23 +225,24 @@ namespace Community.APi.Controllers
             }
 
         }
-        [Route("communitys/{id}/tags")]
+        //TODO: Paso 12 - 5 - Implementamos el nuevo  RouteFactoryAttribute
+        [VersionedRoute("communitys/{id}/tags", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {
             try
             {
-              
+
                 var db = await this._communityService.GetByIdAsync(id);
                 if (db == null)
                     return NotFound();
 
-               var results = db.Tags?
-                    .ToList()
-                    .Select(x =>
-                    {
-                        x.Communitys = null;
-                        return CommunityTagMapper.Map(x);
-                    });
+                var results = db.Tags?
+                     .ToList()
+                     .Select(x =>
+                     {
+                         x.Communitys = null;
+                         return CommunityTagMapper.Map(x);
+                     });
 
                 return Ok(results);
 

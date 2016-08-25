@@ -1,9 +1,10 @@
 # RestFullApi
 Se construye una api rest , segura , capas de ser utilizado por múltiples clientes.
 
-#Paso 11 - Cache
+#Paso 12 - Versionado de Api
 
-##Modelo de Request
+##Modelo de Request Header
 ```json
-If-None-Match: W/"2f8e9e59838c4ab8af8d6b73d1e3cbe1"
+api-version: 2
+Accept: application/vnd.communityapi.v2+json
 ```
