@@ -191,7 +191,6 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        [Route("users")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             try

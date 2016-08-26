@@ -70,7 +70,7 @@ namespace Community.Mvc.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-            //TODO: Paso 14 - 1 - Implementamos Edit
+     
             var client = CustomHttpClient.GetClient();
 
             HttpResponseMessage response = await client.GetAsync("api/users/" + id);
@@ -116,7 +116,30 @@ namespace Community.Mvc.Controllers
             {
                 return Content("An error occurred");
             }
+        }
+    
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                var client = CustomHttpClient.GetClient();
 
+                var response = await client.DeleteAsync("api/users/" + id);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return Content("An error occurred");
+                }
+
+            }
+            catch
+            {
+                return Content("An error occurred");
+            }
         }
     }
 }
