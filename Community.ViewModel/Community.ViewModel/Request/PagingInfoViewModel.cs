@@ -2,7 +2,7 @@
 {
     public class PagingInfoViewModel
     {
-        //TODO: Paso 17 - 1 - Paginacion
+      
         public int TotalCount { get; set; }
         public int TotalPages { get; set; }
 

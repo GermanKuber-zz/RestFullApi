@@ -200,6 +200,7 @@
     <Content Include="Views\Communitys\Create.cshtml" />
     <Content Include="Views\Communitys\Edit.cshtml" />
     <Content Include="Views\Communitys\Delete.cshtml" />
+    <Content Include="Views\Communitys\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,7 +10,7 @@ namespace Community.Helper
 
         public static PagingInfoViewModel FindAndParsePagingInfo(HttpResponseHeaders responseHeaders)
         {
-            //TODO: Paso 17 - 1 - Paginacion
+           
             if (responseHeaders.Contains("X-Pagination"))
             {
                 var xPag = responseHeaders.First(ph => ph.Key == "X-Pagination").Value;

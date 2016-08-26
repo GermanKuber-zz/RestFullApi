@@ -16,7 +16,7 @@ namespace Community.Mvc.Controllers
         // GET: Users
         public async Task<ActionResult> Index(int? page = 1)
         {
-            //TODO: Paso 17 - 1 - Paginacion
+
 
             var client = CustomHttpClient.GetClient();
 
@@ -32,8 +32,7 @@ namespace Community.Mvc.Controllers
                 var pagingInfo = HeaderHelper.FindAndParsePagingInfo(response.Headers);
 
                 var list = JsonConvert.DeserializeObject<IEnumerable<UserViewModel>>(content);
-               
-                //TODO: Paso 17 - 5 - Install-Package PagedList.Mvc
+           
                 var pagedList = new StaticPagedList<UserViewModel>(list,
                     pagingInfo.CurrentPage,
                     pagingInfo.PageSize, pagingInfo.TotalCount);
@@ -48,6 +47,7 @@ namespace Community.Mvc.Controllers
             }
 
         }
+
         public ActionResult Create()
         {
             return View();

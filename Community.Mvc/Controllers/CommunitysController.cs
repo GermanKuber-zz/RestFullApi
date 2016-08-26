@@ -16,7 +16,7 @@ namespace Community.Mvc.Controllers
         // GET: Users
         public async Task<ActionResult> Index(int? page = 1)
         {
-            //TODO: Paso 17 - 1 - Paginacion
+
 
             var client = CustomHttpClient.GetClient();
 
@@ -34,7 +34,7 @@ namespace Community.Mvc.Controllers
 
                 var list = JsonConvert.DeserializeObject<IEnumerable<CommunityViewModel>>(content);
 
-                //TODO: Paso 17 - 5 - Install-Package PagedList.Mvc
+      
                 var pagedList = new StaticPagedList<CommunityViewModel>(list,
                     pagingInfo.CurrentPage,
                     pagingInfo.PageSize, pagingInfo.TotalCount);
@@ -47,22 +47,6 @@ namespace Community.Mvc.Controllers
             {
                 return Content("An error occurred.");
             }
-
-         
-
-
-            if (response.IsSuccessStatusCode)
-            {
-                string content = await response.Content.ReadAsStringAsync();
-                var list = JsonConvert.DeserializeObject<IEnumerable<CommunityViewModel>>(content);
-                return View(list);
-
-            }
-            return Content("An error occurred.");
-
-
-
-
         }
         public ActionResult Create()
         {
@@ -146,6 +130,24 @@ namespace Community.Mvc.Controllers
             {
                 return Content("An error occurred");
             }
+        }
+
+        //TODO: Paso 18 - 1 - Se implementa WebClient - Detalle
+        public async Task<ActionResult> Details(int id)
+        {
+            var client = CustomHttpClient.GetClient();
+
+            HttpResponseMessage response = await client.GetAsync("api/communitys/" + id
+            + "?fields=id,description,name,tags");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var model = JsonConvert.DeserializeObject<CommunityViewModel>(content);
+                return View(model);
+            }
+
+            return Content("An error occurred");
         }
 
         public async Task<ActionResult> Delete(int id)
