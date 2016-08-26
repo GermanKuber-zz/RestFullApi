@@ -240,7 +240,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        //TODO: Paso 12 - 7 - Implementamos el nuevo  RouteFactoryAttribute
+       
         [VersionedRoute("users/{id}/Communitys", 2)]
         public async Task<IHttpActionResult> GetCommunitysV2(int id)
         {
