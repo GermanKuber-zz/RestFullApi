@@ -114,7 +114,7 @@ namespace Community.Mvc.Controllers
            
                 JsonPatchDocument<CommunityViewModel> doc = new JsonPatchDocument<CommunityViewModel>();
                 doc.Replace(eg => eg.Description, model.Description);
-                //TODO: Paso 19 - 1 - Se implementa Patch 
+             
                 //doc.Replace(eg => eg.Name, model.Name);
 
                 var requestObj = new PatchCommunityViewModel

@@ -7,7 +7,7 @@ namespace Community.Mvc.Extensions
 {
     public static class HttpClientExtensions
     {
-        //TODO: Paso 19 - 2 - Se implementa Patch 
+
         public static Task<HttpResponseMessage> PatchAsync(this HttpClient client, string requestUri,
             HttpContent content)
         {

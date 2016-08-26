@@ -60,7 +60,8 @@ namespace Community.Mvc.Controllers
         {
             try
             {
-                var client = CustomHttpClient.GetClient();
+                //TODO: Paso 20 - 2 - Se implementa WebClient - Versionado  
+                var client = CustomHttpClient.GetClient("2");
 
                 var serializedItemToCreate = JsonConvert.SerializeObject(model);
 

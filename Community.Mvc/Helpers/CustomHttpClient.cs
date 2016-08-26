@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using Community.Constants;
 
 namespace Community.Mvc.Helpers
@@ -19,5 +20,30 @@ namespace Community.Mvc.Helpers
 
             return client;
         }
+        public static HttpClient GetClient(string requestedVersion = null)
+        {
+            //TODO: Paso 20 - 1 - Se implementa WebClient - Versionado  
+            HttpClient client = new HttpClient();
+
+
+
+            client.BaseAddress = new Uri(Constants.CommunityConstants.ApiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+
+            if (requestedVersion != null)
+            {
+                
+                client.DefaultRequestHeaders.Add("api-version", requestedVersion);
+
+                
+
+
+            }
+
+            return client;
+        }
     }
+
 }

@@ -103,8 +103,31 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        [Route("users")]
+        [VersionedRoute("users", 1)]
         public async Task<IHttpActionResult> Post(UserViewModel model)
+        {
+            try
+            {
+                //TODO: Paso 20 - 3 - Se implementa WebClient - Versionado  
+                if (model == null)
+                    return BadRequest();
+
+                var user = UserMapper.Map(model);
+
+                var userUpdate = await this._userService.InserAsync(user);
+                if (userUpdate.Status == ActionStatus.Created)
+                    return Created(Request.RequestUri + "/" + userUpdate.Entity.Id
+                        , UserMapper.Map(userUpdate.Entity));
+
+                return BadRequest();
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+        [VersionedRoute("users", 2)]
+        public async Task<IHttpActionResult> PostV2(UserViewModel model)
         {
             try
             {
@@ -126,7 +149,7 @@ namespace Community.APi.Controllers
             }
         }
 
-  
+
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]UserViewModel model)
         {
