@@ -27,7 +27,7 @@ namespace Community.Helper
         public bool Match(HttpRequestMessage request, IHttpRoute route,
             string parameterName, IDictionary<string, object> values, HttpRouteDirection routeDirection)
         {
-            //TODO: Paso 12 - 3 - Versionado de Api - Indicamos si coincide con la version permitida
+           
             if (routeDirection == HttpRouteDirection.UriResolution)
             {
                 
@@ -44,7 +44,7 @@ namespace Community.Helper
         private int? GetVersionFromCustomContentType(HttpRequestMessage request)
         {
             string versionAsString = null;
-            //TODO: Paso 12 - 2 - Versionado de Api - Verificamos la version desde el COntentType
+           
 
             var mediaTypes = request.Headers.Accept.Select(h => h.MediaType);
             string matchingMediaType = null;
@@ -78,7 +78,7 @@ namespace Community.Helper
 
         private int? GetVersionFromCustomRequestHeader(HttpRequestMessage request)
         {
-            //TODO: Paso 12 - 1 - Versionado de Api -
+       
             string versionAsString;
             IEnumerable<string> headerValues;
             if (request.Headers.TryGetValues(VersionHeaderName, out headerValues) && headerValues.Count() == 1)
