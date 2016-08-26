@@ -14,7 +14,7 @@ using Community.ViewModel.Request;
 
 namespace Community.APi.Controllers
 {
-    [RoutePrefix("api")]
+
     public class CommunitysController : ApiController
     {
         private readonly ICommunityService _communityService;
@@ -226,7 +226,7 @@ namespace Community.APi.Controllers
 
         }
       
-        [VersionedRoute("communitys/{id}/tags", 1)]
+        [VersionedRoute("api/communitys/{id}/tags", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {
             try

@@ -13,8 +13,7 @@ using Community.ViewModel.Request;
 
 namespace Community.APi.Controllers
 {
-    [RoutePrefix("api")]
-    public class UsersController : ApiController
+        public class UsersController : ApiController
     {
         private readonly IUserService _userService;
         const int MaxPageSize = 10;
@@ -22,7 +21,7 @@ namespace Community.APi.Controllers
         {
             _userService = userService;
         }
-        [Route("users", Name = "UserList")]
+        [Route("api/users", Name = "UserList")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string sort = "id", int page = 1, int pageSize = MaxPageSize)
         {
@@ -106,7 +105,8 @@ namespace Community.APi.Controllers
             }
         }
         [HttpPost]
-        public async Task<IHttpActionResult> Post(UserViewModel model)
+
+        public async Task<IHttpActionResult> Post([FromBody]UserViewModel model)
         {
             try
             {
@@ -127,6 +127,8 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
+
+
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]UserViewModel model)
         {
@@ -217,7 +219,7 @@ namespace Community.APi.Controllers
 
         }
   
-        [VersionedRoute("users/{id}/Communitys", 1)]
+        [VersionedRoute("api/users/{id}/Communitys", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {
             try
@@ -241,7 +243,7 @@ namespace Community.APi.Controllers
             }
         }
        
-        [VersionedRoute("users/{id}/Communitys", 2)]
+        [VersionedRoute("api/users/{id}/Communitys", 2)]
         public async Task<IHttpActionResult> GetCommunitysV2(int id)
         {
             try

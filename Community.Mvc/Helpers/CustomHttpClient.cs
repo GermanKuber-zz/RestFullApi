@@ -9,7 +9,7 @@ namespace Community.Mvc.Helpers
 
         public static HttpClient GetClient()
         {
-            //TODO: Paso 13 - 2 - Cliente
+         
             HttpClient client = new HttpClient();
 
             client.BaseAddress = new Uri(CommunityConstants.ApiUrl);
