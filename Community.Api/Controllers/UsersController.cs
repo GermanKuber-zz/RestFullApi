@@ -126,7 +126,7 @@ namespace Community.APi.Controllers
             }
         }
 
-        [Route("users")]
+  
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]UserViewModel model)
         {

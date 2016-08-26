@@ -99,8 +99,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        [Route("Communitys")]
-        public async Task<IHttpActionResult> Get(int id)
+    public async Task<IHttpActionResult> Get(int id)
         {
             try
             {
