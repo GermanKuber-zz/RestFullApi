@@ -14,7 +14,7 @@ using Community.ViewModel.Request;
 
 namespace Community.APi.Controllers
 {
-
+    [RoutePrefix("api")]
     public class CommunitysController : ApiController
     {
         private readonly ICommunityService _communityService;
@@ -99,7 +99,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-
+        [Route("Communitys")]
         public async Task<IHttpActionResult> Get(int id)
         {
             try
@@ -116,6 +116,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
+        [Route("Communitys")]
         [HttpPost]
         public async Task<IHttpActionResult> Post(CommunityViewModel model)
         {
@@ -138,6 +139,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
+        [Route("Communitys")]
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]CommunityViewModel model)
         {
@@ -162,7 +164,7 @@ namespace Community.APi.Controllers
             }
 
         }
-
+        [Route("Communitys")]
         [HttpPatch]
         public async Task<IHttpActionResult> Patch(PatchCommunityViewModel model)
         {
@@ -200,7 +202,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-
+        [Route("Communitys")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             try
@@ -226,7 +228,7 @@ namespace Community.APi.Controllers
 
         }
       
-        [VersionedRoute("api/communitys/{id}/tags", 1)]
+        [VersionedRoute("communitys/{id}/tags", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {
             try

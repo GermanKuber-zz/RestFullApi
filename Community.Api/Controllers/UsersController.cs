@@ -13,7 +13,8 @@ using Community.ViewModel.Request;
 
 namespace Community.APi.Controllers
 {
-        public class UsersController : ApiController
+    [RoutePrefix("api")]
+    public class UsersController : ApiController
     {
         private readonly IUserService _userService;
         const int MaxPageSize = 10;
@@ -21,14 +22,12 @@ namespace Community.APi.Controllers
         {
             _userService = userService;
         }
-        [Route("api/users", Name = "UserList")]
+        [Route("users", Name = "UserList")]
         [HttpGet]
         public async Task<IHttpActionResult> Get(string sort = "id", int page = 1, int pageSize = MaxPageSize)
         {
             try
             {
-               
-
                 //Ejemplo : api/users?sort=email&page=1&pagesize=2
                 //api/users?sort=name
                 var users = await this._userService.GetAllAsync();
@@ -104,9 +103,8 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        [HttpPost]
-
-        public async Task<IHttpActionResult> Post([FromBody]UserViewModel model)
+        [Route("users")]
+        public async Task<IHttpActionResult> Post(UserViewModel model)
         {
             try
             {
@@ -128,7 +126,7 @@ namespace Community.APi.Controllers
             }
         }
 
-
+        [Route("users")]
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]UserViewModel model)
         {
@@ -153,7 +151,7 @@ namespace Community.APi.Controllers
             }
 
         }
-
+        [Route("users")]
         [HttpPatch]
         public async Task<IHttpActionResult> Patch(PatchUserViewModel model)
         {
@@ -193,7 +191,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-
+        [Route("users")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             try
@@ -218,8 +216,8 @@ namespace Community.APi.Controllers
             }
 
         }
-  
-        [VersionedRoute("api/users/{id}/Communitys", 1)]
+
+        [VersionedRoute("users/{id}/Communitys", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {
             try
@@ -242,8 +240,8 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-       
-        [VersionedRoute("api/users/{id}/Communitys", 2)]
+
+        [VersionedRoute("users/{id}/Communitys", 2)]
         public async Task<IHttpActionResult> GetCommunitysV2(int id)
         {
             try
