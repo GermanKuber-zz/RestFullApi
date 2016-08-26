@@ -216,7 +216,7 @@ namespace Community.APi.Controllers
             }
 
         }
-        //TODO: Paso 12 - 6 - Implementamos el nuevo  RouteFactoryAttribute
+  
         [VersionedRoute("users/{id}/Communitys", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {

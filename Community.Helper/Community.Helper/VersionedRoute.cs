@@ -5,7 +5,7 @@ namespace Community.Helper
 {
     public class VersionedRoute : RouteFactoryAttribute
     {
-        //TODO: Paso 12 - 4 - Versionado de Api 
+      
         public VersionedRoute(string template, int allowedVersion)
             : base(template)
         {
