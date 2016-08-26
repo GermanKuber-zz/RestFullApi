@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Community.Helper;
+using Community.Mvc.Extensions;
 using Community.Mvc.Helpers;
 using Community.ViewModel.Request;
+using Marvin.JsonPatch;
 using Newtonsoft.Json;
 using PagedList;
 
@@ -21,7 +23,7 @@ namespace Community.Mvc.Controllers
             var client = CustomHttpClient.GetClient();
 
 
-     
+
             HttpResponseMessage response =
                 await client.GetAsync("api/communitys?sort=name&page=" + page + "&pagesize=5");
 
@@ -34,7 +36,7 @@ namespace Community.Mvc.Controllers
 
                 var list = JsonConvert.DeserializeObject<IEnumerable<CommunityViewModel>>(content);
 
-      
+
                 var pagedList = new StaticPagedList<CommunityViewModel>(list,
                     pagingInfo.CurrentPage,
                     pagingInfo.PageSize, pagingInfo.TotalCount);
@@ -100,7 +102,7 @@ namespace Community.Mvc.Controllers
 
         }
 
-        // POST: ExpenseGroups/Edit/5   
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, CommunityViewModel model)
@@ -109,12 +111,23 @@ namespace Community.Mvc.Controllers
             {
                 var client = CustomHttpClient.GetClient();
 
-                // serialize & PUT
-                var serializedItemToUpdate = JsonConvert.SerializeObject(model);
+           
+                JsonPatchDocument<CommunityViewModel> doc = new JsonPatchDocument<CommunityViewModel>();
+                doc.Replace(eg => eg.Description, model.Description);
+                //TODO: Paso 19 - 1 - Se implementa Patch 
+                //doc.Replace(eg => eg.Name, model.Name);
 
-                var response = await client.PutAsync("api/communitys/" + id,
-                    new StringContent(serializedItemToUpdate,
-                        System.Text.Encoding.Unicode, "application/json"));
+                var requestObj = new PatchCommunityViewModel
+                {
+                    Id = id,
+                    Model = doc
+                };
+
+                var serializedItemToUpdate = JsonConvert.SerializeObject(requestObj);
+                var response = await client.PatchAsync("api/communitys/" + id,
+                              new StringContent(serializedItemToUpdate, System.Text.Encoding.Unicode, "application/json"));
+
+
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -132,7 +145,7 @@ namespace Community.Mvc.Controllers
             }
         }
 
-        //TODO: Paso 18 - 1 - Se implementa WebClient - Detalle
+        
         public async Task<ActionResult> Details(int id)
         {
             var client = CustomHttpClient.GetClient();

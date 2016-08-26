@@ -1,4 +1,4 @@
-﻿namespace Community.ViewModel
+﻿namespace Community.ViewModel.Request
 {
     public class PagingInfoViewModel
     {

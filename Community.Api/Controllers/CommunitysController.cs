@@ -99,7 +99,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-    public async Task<IHttpActionResult> Get(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-    
+
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]CommunityViewModel model)
         {
@@ -163,7 +163,7 @@ namespace Community.APi.Controllers
             }
 
         }
- 
+
         [HttpPatch]
         public async Task<IHttpActionResult> Patch(PatchCommunityViewModel model)
         {
@@ -225,7 +225,7 @@ namespace Community.APi.Controllers
             }
 
         }
-      
+
         [VersionedRoute("communitys/{id}/tags", 1)]
         public async Task<IHttpActionResult> GetCommunitys(int id)
         {
