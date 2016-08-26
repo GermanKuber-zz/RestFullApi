@@ -2,9 +2,11 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Community.Helper;
 using Community.Mvc.Helpers;
 using Community.ViewModel.Request;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace Community.Mvc.Controllers
 {
@@ -12,26 +14,38 @@ namespace Community.Mvc.Controllers
     {
 
         // GET: Users
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? page = 1)
         {
+            //TODO: Paso 17 - 1 - Paginacion
 
             var client = CustomHttpClient.GetClient();
 
 
-            var response = await client.GetAsync("api/users");
+            HttpResponseMessage response =
+                await client.GetAsync("api/users?sort=name&page=" + page + "&pagesize=5");
 
-
+            var returnValue = new UserReturnViewModel();
             if (response.IsSuccessStatusCode)
             {
                 string content = await response.Content.ReadAsStringAsync();
+
+                var pagingInfo = HeaderHelper.FindAndParsePagingInfo(response.Headers);
+
                 var list = JsonConvert.DeserializeObject<IEnumerable<UserViewModel>>(content);
-                return View(list);
+               
+                //TODO: Paso 17 - 5 - Install-Package PagedList.Mvc
+                var pagedList = new StaticPagedList<UserViewModel>(list,
+                    pagingInfo.CurrentPage,
+                    pagingInfo.PageSize, pagingInfo.TotalCount);
+                returnValue.PagingInfo = pagingInfo;
+                returnValue.Users = pagedList;
+                return View(returnValue);
 
             }
-            return Content("An error occurred.");
-
-
-
+            else
+            {
+                return Content("An error occurred.");
+            }
 
         }
         public ActionResult Create()

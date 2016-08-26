@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Community.ViewModel.Request.CommunityViewModel>
+﻿@using PagedList.Mvc
+@model Community.ViewModel.Request.CommunityReturnViewModel
 
 
 <!DOCTYPE html>
@@ -9,21 +10,23 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
+    <h2>Communitys</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Communitys.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Communitys.First().Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Communitys)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -32,13 +35,18 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-        
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
             </td>
         </tr>
     }
-    
-    </table>
+
+</table>
+
+@(Model.PagingInfo.CurrentPage) of @Model.PagingInfo.TotalPages
+
+@Html.PagedListPager(Model.Communitys, page => Url.Action("Index",
+    new {page}))
 </body>
 </html>

@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Community.ViewModel.Request.UserViewModel>
-@*TODO: Paso 13 - 2 - Implementamos vista*@
+﻿@model Community.ViewModel.Request.UserReturnViewModel
+@using PagedList;
+@using PagedList.Mvc
 <!DOCTYPE html>
 
 <html>
@@ -12,46 +13,53 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table">
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.First().Company)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Users)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Company)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
          
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
-    </table>
+</table>
+
+    @(Model.PagingInfo.CurrentPage) of @Model.PagingInfo.TotalPages
+
+    @Html.PagedListPager(Model.Users, page => Url.Action("Index",
+    new { page }))
+
+
 </body>
 </html>
