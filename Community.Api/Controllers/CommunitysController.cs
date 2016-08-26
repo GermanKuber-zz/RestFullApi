@@ -138,7 +138,7 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        [Route("Communitys")]
+    
         [HttpPut]
         public async Task<IHttpActionResult> Put(int id, [FromBody]CommunityViewModel model)
         {
@@ -163,7 +163,7 @@ namespace Community.APi.Controllers
             }
 
         }
-        [Route("Communitys")]
+ 
         [HttpPatch]
         public async Task<IHttpActionResult> Patch(PatchCommunityViewModel model)
         {
@@ -201,7 +201,6 @@ namespace Community.APi.Controllers
                 return InternalServerError();
             }
         }
-        [Route("Communitys")]
         public async Task<IHttpActionResult> Delete(int id)
         {
             try

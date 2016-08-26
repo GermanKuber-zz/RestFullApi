@@ -70,7 +70,7 @@ namespace Community.Mvc.Controllers
 
         public async Task<ActionResult> Edit(int id)
         {
-     
+
             var client = CustomHttpClient.GetClient();
 
             HttpResponseMessage response = await client.GetAsync("api/users/" + id);
@@ -117,7 +117,7 @@ namespace Community.Mvc.Controllers
                 return Content("An error occurred");
             }
         }
-    
+
         public async Task<ActionResult> Delete(int id)
         {
             try
@@ -143,3 +143,4 @@ namespace Community.Mvc.Controllers
         }
     }
 }
+
