@@ -22,7 +22,7 @@ namespace Community.Mvc.Helpers
         }
         public static HttpClient GetClient(string requestedVersion = null)
         {
-            //TODO: Paso 20 - 1 - Se implementa WebClient - Versionado  
+          
             HttpClient client = new HttpClient();
 
 

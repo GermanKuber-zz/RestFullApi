@@ -108,7 +108,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-                //TODO: Paso 20 - 3 - Se implementa WebClient - Versionado  
+              
                 if (model == null)
                     return BadRequest();
 
