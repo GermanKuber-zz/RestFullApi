@@ -11,9 +11,6 @@ namespace Community.Mvc
 {
     public class Startup
     {
-        //TODO: Paso 23 - 1 - Se activa ssl
-        //Install-Package Microsoft.Owin.Security.Cookies
-        //Install-Package Microsoft.Owin.Security.OpenIdConnect
         public void Configuration(IAppBuilder app)
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -27,18 +24,24 @@ namespace Community.Mvc
                 Authority = CommunityConstants.IdSrv,
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
-                
-                ResponseType = "code id_token",
-                //TODO: Paso 23 - 3 - Se pide informacion del perfil
-                Scope = "openid",
-                //Scope = "openid profile",
+                //TODO: Paso 24 - 1 - Agrego token
+                ResponseType = "code id_token token",
+                Scope = "openid profile",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
+                    MessageReceived = async n =>
+                    {
+                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.IdToken);
+                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.AccessToken);
 
-                    MessageReceived = async n => EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.IdToken)
+
+                        //TODO: Paso 24 - 2 - Consumo el end point
+                        var userInfo = await EndpointAndTokenHelper.CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);
+
+                    }
+
                 }
-
             });
 
         }

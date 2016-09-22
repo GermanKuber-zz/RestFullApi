@@ -11,8 +11,6 @@ using Newtonsoft.Json.Linq;
 
 namespace Community.Mvc.Helpers
 {
-    //TODO: Paso 23 - 2 - Se crea Helper para mostrar
-
     public static class EndpointAndTokenHelper
     {
         public static async Task<JObject> CallUserInfoEndpoint(string accessToken)
