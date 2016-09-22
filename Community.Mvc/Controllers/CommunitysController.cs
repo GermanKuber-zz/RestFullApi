@@ -10,21 +10,23 @@ using Community.ViewModel.Request;
 using Marvin.JsonPatch;
 using Newtonsoft.Json;
 using PagedList;
+using Thinktecture.IdentityModel.Mvc;
 
 namespace Community.Mvc.Controllers
 {
-    [Authorize]
 
     public class CommunitysController : Controller
     {
+        //TODO: Paso 26 - 7
+        //Probamos con usuario Federico
 
-        // GET: Users
+        [ResourceAuthorize("Read", "Communitys")]
         public async Task<ActionResult> Index(int? page = 1)
         {
 
-            //TODO: Paso 25 - 5
-            //var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
+
+            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity.FindFirst("unique_user_key").Value;
 
             var client = CustomHttpClient.GetClient();
 
@@ -61,7 +63,7 @@ namespace Community.Mvc.Controllers
             return View();
         }
 
-        // POST: ExpenseGroups/Create
+        [ResourceAuthorize("Write", "Communitys")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CommunityViewModel model)
@@ -88,8 +90,8 @@ namespace Community.Mvc.Controllers
             }
 
         }
-        // GET: ExpenseGroups/Edit/5
 
+        [ResourceAuthorize("Write", "Communitys")]
         public async Task<ActionResult> Edit(int id)
         {
 
@@ -108,7 +110,7 @@ namespace Community.Mvc.Controllers
 
         }
 
-
+        [ResourceAuthorize("Write", "Communitys")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, CommunityViewModel model)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens;
+using System.Linq;
 using System.Security.Claims;
 using System.Web.Helpers;
 using Community.Constants;
@@ -8,6 +9,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using Newtonsoft.Json.Linq;
 using Owin;
 
 [assembly: OwinStartup(typeof(Community.Mvc.Startup))]
@@ -16,15 +18,16 @@ namespace Community.Mvc
 {
     public class Startup
     {
-        //TODO: Paso 25 - 1 - Instalo paquetes
-        //Install-Package Thinktecture.IdentityModel.Client
         public void Configuration(IAppBuilder app)
         {
-            //TODO: Paso 25 - 2 - Instalo paquetes
+
             JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
 
-            //TODO: Paso 25 - 4 - Utilizo el id generado
-            //AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
+
+         
+            //TODO: Paso 26 - 6 - Usamos manejador
+            app.UseResourceAuthorization(new AuthorizationManager());
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
@@ -33,16 +36,24 @@ namespace Community.Mvc
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
             {
+                //TODO: Paso 26 - 3 - Pido roles
                 ClientId = "mvc",
                 Authority = CommunityConstants.IdSrv,
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
                 ResponseType = "code id_token token",
-                Scope = "openid profile",
+                Scope = "openid profile roles",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
-                    MessageReceived = async n => { },
+                    MessageReceived = async n =>
+                    {
+                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.IdToken);
+                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.AccessToken);
+
+                        //var userInfo = await EndpointAndTokenHelper.CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);    
+
+                    },
                     SecurityTokenValidated = async n =>
                     {
                         var userInfo = await EndpointAndTokenHelper.CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);
@@ -56,6 +67,8 @@ namespace Community.Mvc
                             Thinktecture.IdentityModel.Client.JwtClaimTypes.FamilyName,
                             userInfo.Value<string>("family_name"));
 
+                        var roles = userInfo.Value<JArray>("role").ToList();
+
                         var newIdentity = new ClaimsIdentity(
                            n.AuthenticationTicket.Identity.AuthenticationType,
                            Thinktecture.IdentityModel.Client.JwtClaimTypes.GivenName,
@@ -64,14 +77,23 @@ namespace Community.Mvc
                         newIdentity.AddClaim(givenNameClaim);
                         newIdentity.AddClaim(familyNameClaim);
 
-                        //TODO: Paso 25 - 3 - Genero un Id de usuario
-                        //var issuerClaim = n.AuthenticationTicket.Identity
-                        //    .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Issuer);
-                        //var subjectClaim = n.AuthenticationTicket.Identity
-                        //    .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
+                        //TODO: Paso 26 - 4 - Agrego roles a mi identity
+                        //Install-Package Thinktecture.IdentityModel.Owin.ResourceAuthorization
+                  
+                        foreach (var role in roles)
+                        {
+                            newIdentity.AddClaim(new Claim(
+                            Thinktecture.IdentityModel.Client.JwtClaimTypes.Role,
+                            role.ToString()));
+                        }
 
-                        //newIdentity.AddClaim(new Claim("unique_user_key",
-                        //    issuerClaim.Value + "_" + subjectClaim.Value));
+                        var issuerClaim = n.AuthenticationTicket.Identity
+                            .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Issuer);
+                        var subjectClaim = n.AuthenticationTicket.Identity
+                            .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
+
+                        newIdentity.AddClaim(new Claim("unique_user_key",
+                            issuerClaim.Value + "_" + subjectClaim.Value));
 
 
                         n.AuthenticationTicket = new AuthenticationTicket(

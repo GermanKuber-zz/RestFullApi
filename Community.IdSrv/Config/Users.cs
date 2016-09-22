@@ -9,7 +9,7 @@ namespace Community.IdSrv.Config
         public static List<InMemoryUser> Get()
         {
             return new List<InMemoryUser>() {
-
+            //TODO: Paso 26 - 1 - Agrego roles
                new InMemoryUser
             {
                 Username = "German",
@@ -20,6 +20,10 @@ namespace Community.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "German"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "German"),
+                    new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebWriteUser"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileWriteUser")
                }
             },
             new InMemoryUser
@@ -32,6 +36,8 @@ namespace Community.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Federico"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Federico"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebReadUser"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileWriteUser")
                }
             },
             new InMemoryUser
@@ -44,6 +50,8 @@ namespace Community.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "Usuario"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "Usuario"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "WebWriteUser"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileWriteUser")
                }
             },
             new InMemoryUser
@@ -56,6 +64,7 @@ namespace Community.IdSrv.Config
                 {
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.GivenName, "SuperUsuario"),
                     new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.FamilyName, "SuperUsuario"),
+                      new Claim(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Role, "MobileReadUser"),
                }
             }};
         }
