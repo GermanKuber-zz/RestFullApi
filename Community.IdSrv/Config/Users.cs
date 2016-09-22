@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Thinktecture.IdentityServer.Core;
 using Thinktecture.IdentityServer.Core.Services.InMemory;
 
-namespace Community.APi.Config
+namespace Community.IdSrv.Config
 {
     public static class Users
     {
-        //TODO: Paso 22 - 5 - Security Token 
         public static List<InMemoryUser> Get()
         {
             return new List<InMemoryUser>() {

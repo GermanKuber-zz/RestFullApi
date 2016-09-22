@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Http.Dependencies;
 using Microsoft.Practices.Unity;
 
-namespace Community.APi.IOC
+namespace Community.IdSrv.IOC
 {
     public class UnityResolver : IDependencyResolver
     {

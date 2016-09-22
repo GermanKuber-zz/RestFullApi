@@ -2,13 +2,11 @@
 using Community.Constants;
 using Thinktecture.IdentityServer.Core.Models;
 
-namespace Community.APi.Config
+namespace Community.IdSrv.Config
 {
     public static class Clients
     {
-       
-        //TODO: Paso 22 - 1 - Security Token - Implementar SSL
-        public static IEnumerable<Client> Get()
+               public static IEnumerable<Client> Get()
         {
             return new[]
              {
@@ -22,7 +20,7 @@ namespace Community.APi.Config
 
                     RedirectUris = new List<string>
                     {
-                        CommunityConstants.ApiUrl
+                        CommunityConstants.ClientUrl
                     }
                  }
              };

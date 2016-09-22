@@ -26,6 +26,12 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
+                @*TODO: Paso 23 - 4 - Logout*@
+                @if (User.Identity.IsAuthenticated)
+                { <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("(Logout)", "Logout", "Header")</li>
+                </ul>
+                }
             </div>
         </div>
     </div>

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
-using Community.APi;
-using Community.APi.Config;
 using Community.Constants;
+using Community.IdSrv.Config;
 using Microsoft.Owin;
 using Owin;
 using Thinktecture.IdentityServer.Core.Configuration;
 
+[assembly: OwinStartup(typeof(Community.IdSrv.Startup))]
 
-[assembly: OwinStartup(typeof(Startup))]
-
-namespace Community.APi
+namespace Community.IdSrv
 {
     public class Startup
     {
@@ -33,7 +31,7 @@ namespace Community.APi
                 });
             });
         }
-        //TODO: Paso 22 - 3 - Security Token 
+
         //https://localhost:44344//identity//.well-known/openid-configuration
         //Cargamos los cerficiados
         //Habilitamos SSl

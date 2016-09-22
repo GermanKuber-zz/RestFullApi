@@ -12,6 +12,8 @@ using PagedList;
 
 namespace Community.Mvc.Controllers
 {
+    [Authorize]
+
     public class CommunitysController : Controller
     {
 
