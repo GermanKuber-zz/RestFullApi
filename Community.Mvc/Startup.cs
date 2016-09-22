@@ -1,6 +1,11 @@
-﻿using Community.Constants;
+﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Web.Helpers;
+using Community.Constants;
 using Community.Mvc.Helpers;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Owin;
@@ -11,8 +16,16 @@ namespace Community.Mvc
 {
     public class Startup
     {
+        //TODO: Paso 25 - 1 - Instalo paquetes
+        //Install-Package Thinktecture.IdentityModel.Client
         public void Configuration(IAppBuilder app)
         {
+            //TODO: Paso 25 - 2 - Instalo paquetes
+            JwtSecurityTokenHandler.InboundClaimTypeMap = new Dictionary<string, string>();
+
+            //TODO: Paso 25 - 4 - Utilizo el id generado
+            //AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "Cookies"
@@ -24,20 +37,47 @@ namespace Community.Mvc
                 Authority = CommunityConstants.IdSrv,
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
-                //TODO: Paso 24 - 1 - Agrego token
                 ResponseType = "code id_token token",
                 Scope = "openid profile",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
-                    MessageReceived = async n =>
+                    MessageReceived = async n => { },
+                    SecurityTokenValidated = async n =>
                     {
-                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.IdToken);
-                        EndpointAndTokenHelper.DecodeAndWrite(n.ProtocolMessage.AccessToken);
-
-
-                        //TODO: Paso 24 - 2 - Consumo el end point
                         var userInfo = await EndpointAndTokenHelper.CallUserInfoEndpoint(n.ProtocolMessage.AccessToken);
+
+
+                        var givenNameClaim = new Claim(
+                            Thinktecture.IdentityModel.Client.JwtClaimTypes.GivenName,
+                            userInfo.Value<string>("given_name"));
+
+                        var familyNameClaim = new Claim(
+                            Thinktecture.IdentityModel.Client.JwtClaimTypes.FamilyName,
+                            userInfo.Value<string>("family_name"));
+
+                        var newIdentity = new ClaimsIdentity(
+                           n.AuthenticationTicket.Identity.AuthenticationType,
+                           Thinktecture.IdentityModel.Client.JwtClaimTypes.GivenName,
+                           Thinktecture.IdentityModel.Client.JwtClaimTypes.Role);
+
+                        newIdentity.AddClaim(givenNameClaim);
+                        newIdentity.AddClaim(familyNameClaim);
+
+                        //TODO: Paso 25 - 3 - Genero un Id de usuario
+                        //var issuerClaim = n.AuthenticationTicket.Identity
+                        //    .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Issuer);
+                        //var subjectClaim = n.AuthenticationTicket.Identity
+                        //    .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
+
+                        //newIdentity.AddClaim(new Claim("unique_user_key",
+                        //    issuerClaim.Value + "_" + subjectClaim.Value));
+
+
+                        n.AuthenticationTicket = new AuthenticationTicket(
+                            newIdentity,
+                            n.AuthenticationTicket.Properties);
+
 
                     }
 

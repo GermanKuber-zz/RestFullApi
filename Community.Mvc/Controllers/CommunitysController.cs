@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Community.Helper;
@@ -21,6 +22,9 @@ namespace Community.Mvc.Controllers
         public async Task<ActionResult> Index(int? page = 1)
         {
 
+            //TODO: Paso 25 - 5
+            //var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            //var userId = claimsIdentity.FindFirst("unique_user_key").Value;
 
             var client = CustomHttpClient.GetClient();
 
