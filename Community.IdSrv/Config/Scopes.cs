@@ -22,7 +22,15 @@ namespace Community.IdSrv.Config
                         {
                             new ScopeClaim("role")
                         }
-                    }
+                    } ,new Scope
+                    {
+                        //TODO: Paso 28 - 1 - Se genera nuevo scope para la api
+                        Name = "communityapi",
+                        DisplayName = "Community API Scope",
+                        Type = ScopeType.Resource,
+                        Emphasize = false,
+                         Enabled = true
+                    },
 
                  };
 

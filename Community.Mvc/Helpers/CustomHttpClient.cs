@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Web;
 using Community.Constants;
 
 namespace Community.Mvc.Helpers
@@ -12,7 +14,13 @@ namespace Community.Mvc.Helpers
         {
          
             HttpClient client = new HttpClient();
-
+            //TODO: Paso 28 - 5 - Se agrega el access_token a el header del request
+            //Install-Package Thinktecture.IdentityServer3.AccessTokenValidation
+            var token = (HttpContext.Current.User.Identity as ClaimsIdentity).FindFirst("access_token");
+            if (token != null)
+            {
+                client.SetBearerToken(token.Value);
+            }
             client.BaseAddress = new Uri(CommunityConstants.ApiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(

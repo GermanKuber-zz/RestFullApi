@@ -10,6 +10,8 @@ namespace Community.IdSrv.Config
         {
             return new[]
              {
+             
+                //TODO: Paso 28 - 2 - Se agrega cliente par ala api
                 new Client
                 {
                      Enabled = true,
@@ -22,7 +24,26 @@ namespace Community.IdSrv.Config
                     {
                         CommunityConstants.ClientUrl
                     }
-                 }
+                 },
+                   new Client
+                    {
+                    ClientName = "Expense Tracker Native Client (Implicit Flow)",
+                    Enabled = true,
+                    ClientId = "native",
+                    Flow = Flows.Implicit,
+                    RequireConsent = true,
+
+
+                    ScopeRestrictions = new List<string>
+                    {
+                        Thinktecture.IdentityServer.Core.Constants.StandardScopes.OpenId,
+                        "roles",
+                        "communityapi"
+                    },
+
+
+                    }
+
              };
 
         }

@@ -40,7 +40,8 @@ namespace Community.Mvc
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
                 ResponseType = "code id_token token",
-                Scope = "openid profile roles",
+                //TODO: Paso 28 - 3 - Se solicita el scope
+                Scope = "openid profile roles communityapi",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
@@ -91,6 +92,8 @@ namespace Community.Mvc
 
                         newIdentity.AddClaim(new Claim("unique_user_key",
                             issuerClaim.Value + "_" + subjectClaim.Value));
+                        //TODO: Paso 28 - 4 - Se agrega el access_token a nuestros claims
+                        newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
 
 
                         n.AuthenticationTicket = new AuthenticationTicket(

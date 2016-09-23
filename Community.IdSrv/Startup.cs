@@ -40,7 +40,6 @@ namespace Community.IdSrv
 
             });
         }
-        //TODO: Paso 27 - 2 - Configuro provider
         private void ConfigureIdentityProviders(IAppBuilder app, string signInAsType)
         {
 
@@ -55,7 +54,6 @@ namespace Community.IdSrv
                 {
                     OnAuthenticated = (context) =>
                     {
-                        //TODO: Paso 27 - 3 - Transformo los claims que recibo de facebook
                         JToken lastName, firstName;
                         if (context.User.TryGetValue("last_name", out lastName))
                         {
@@ -104,7 +102,6 @@ namespace Community.IdSrv
                 {
                     OnAuthenticated = (context) =>
                     {
-                        //TODO: Paso 27 - 3 - Transformo los claims que recibo de facebook
                         JToken lastName, firstName;
                         if (context.User.TryGetValue("last_name", out lastName))
                         {
@@ -134,9 +131,6 @@ namespace Community.IdSrv
             app.UseGoogleAuthentication(opetions);
         }
 
-        //TODO: Paso 27 - 1 - Registro mi app en developers.facebook.com
-        //Install-Package Microsoft.Owin.Security.Facebook
-        //Install-Package Microsoft.Owin.Security.Google
         //https://localhost:44344//identity//.well-known/openid-configuration
         //Cargamos los cerficiados
         //Habilitamos SSl

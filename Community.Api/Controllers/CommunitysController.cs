@@ -27,6 +27,8 @@ namespace Community.APi.Controllers
         }
         [Route("Communitys", Name = "CommunitysList")]
         [HttpGet]
+        [Authorize]
+        //TODO: Paso 28 - 6
         public async Task<IHttpActionResult> Get(string sort = "id", string fields = null, int page = 1, int pageSize = MaxPageSize)
         {
             try
