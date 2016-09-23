@@ -25,7 +25,7 @@ namespace Community.Mvc
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
 
-         
+
             app.UseResourceAuthorization(new AuthorizationManager());
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -40,7 +40,6 @@ namespace Community.Mvc
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
                 ResponseType = "code id_token token",
-                //TODO: Paso 28 - 3 - Se solicita el scope
                 Scope = "openid profile roles communityapi",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
@@ -76,8 +75,8 @@ namespace Community.Mvc
                         newIdentity.AddClaim(givenNameClaim);
                         newIdentity.AddClaim(familyNameClaim);
 
-             
-                 
+
+
                         foreach (var role in roles)
                         {
                             newIdentity.AddClaim(new Claim(
@@ -92,7 +91,6 @@ namespace Community.Mvc
 
                         newIdentity.AddClaim(new Claim("unique_user_key",
                             issuerClaim.Value + "_" + subjectClaim.Value));
-                        //TODO: Paso 28 - 4 - Se agrega el access_token a nuestros claims
                         newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
 
 

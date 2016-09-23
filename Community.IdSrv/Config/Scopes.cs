@@ -24,18 +24,23 @@ namespace Community.IdSrv.Config
                         }
                     } ,new Scope
                     {
-                        //TODO: Paso 28 - 1 - Se genera nuevo scope para la api
                         Name = "communityapi",
                         DisplayName = "Community API Scope",
                         Type = ScopeType.Resource,
                         Emphasize = false,
-                         Enabled = true
+                        Enabled = true,
+                        //TODO : 29 - 1 - Se agergan claims de roles
+                        //Install-Package Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi
+                        Claims = new List<ScopeClaim>
+                        {
+                            new ScopeClaim("role")
+                        }
                     },
 
                  };
 
             return scopes;
         }
- 
+
     }
 }

@@ -10,9 +10,7 @@ namespace Community.IdSrv.Config
         {
             return new[]
              {
-             
-                //TODO: Paso 28 - 2 - Se agrega cliente par ala api
-                new Client
+             new Client
                 {
                      Enabled = true,
                      ClientId = "mvc",

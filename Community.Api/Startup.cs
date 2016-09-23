@@ -1,4 +1,5 @@
 ﻿using Community.APi;
+using Community.APi.Helper;
 using Community.Constants;
 using Microsoft.Owin;
 using Owin;
@@ -11,6 +12,10 @@ namespace Community.APi
     {
         public void Configuration(IAppBuilder app)
         {
+            //TODO : 29 - 6
+
+            app.UseResourceAuthorization(new AuthorizationManager());
+
             app.UseIdentityServerBearerTokenAuthentication(new
                  IdentityServerBearerTokenAuthenticationOptions
                     {

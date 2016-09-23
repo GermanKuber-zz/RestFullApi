@@ -14,8 +14,6 @@ namespace Community.Mvc.Helpers
         {
          
             HttpClient client = new HttpClient();
-            //TODO: Paso 28 - 5 - Se agrega el access_token a el header del request
-            //Install-Package Thinktecture.IdentityServer3.AccessTokenValidation
             var token = (HttpContext.Current.User.Identity as ClaimsIdentity).FindFirst("access_token");
             if (token != null)
             {

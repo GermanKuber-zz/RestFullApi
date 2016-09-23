@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Net.Http.Headers;
-using Community.ViewModel;
 using Community.ViewModel.Request;
 using Newtonsoft.Json;
 

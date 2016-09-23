@@ -11,9 +11,11 @@ using Community.Core.Results;
 using Community.Helper;
 using Community.Mapper;
 using Community.ViewModel.Request;
+using Thinktecture.IdentityModel.WebApi;
 
 namespace Community.APi.Controllers
 {
+
     [RoutePrefix("api")]
     public class CommunitysController : ApiController
     {
@@ -27,8 +29,8 @@ namespace Community.APi.Controllers
         }
         [Route("Communitys", Name = "CommunitysList")]
         [HttpGet]
-        [Authorize]
-        //TODO: Paso 28 - 6
+        [ResourceAuthorize("Read", "Communitys")]
+        //TODO : 29 - 4
         public async Task<IHttpActionResult> Get(string sort = "id", string fields = null, int page = 1, int pageSize = MaxPageSize)
         {
             try
@@ -167,42 +169,6 @@ namespace Community.APi.Controllers
         }
 
         [HttpPatch]
-        public async Task<IHttpActionResult> Patch(PatchCommunityViewModel model)
-        {
-            try
-            {
-                if (model == null)
-                {
-                    return BadRequest();
-                }
-
-                var db = await _communityService.GetByIdAsync(model.Id);
-                if (db == null)
-                    return NotFound();
-
-
-                var viewModel = CommunityMapper.Map(db);
-
-
-                model.Model.ApplyTo(viewModel);
-
-
-                var result = await _communityService.UpdateAsync(CommunityMapper.Map(viewModel, db));
-
-                if (result.Status == ActionStatus.Updated)
-                {
-
-                    var returnMapper = CommunityMapper.Map(result.Entity);
-                    return Ok(returnMapper);
-                }
-
-                return BadRequest();
-            }
-            catch (Exception)
-            {
-                return InternalServerError();
-            }
-        }
         public async Task<IHttpActionResult> Delete(int id)
         {
             try
@@ -255,4 +221,6 @@ namespace Community.APi.Controllers
             }
         }
     }
+
+   
 }
