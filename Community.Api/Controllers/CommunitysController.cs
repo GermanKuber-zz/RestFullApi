@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -15,7 +16,9 @@ using Thinktecture.IdentityModel.WebApi;
 
 namespace Community.APi.Controllers
 {
+    //TODO : 30 - 4
 
+    [Authorize]
     [RoutePrefix("api")]
     public class CommunitysController : ApiController
     {
@@ -29,8 +32,7 @@ namespace Community.APi.Controllers
         }
         [Route("Communitys", Name = "CommunitysList")]
         [HttpGet]
-        [ResourceAuthorize("Read", "Communitys")]
-        //TODO : 29 - 4
+        //[ResourceAuthorize("Read", "Communitys")]
         public async Task<IHttpActionResult> Get(string sort = "id", string fields = null, int page = 1, int pageSize = MaxPageSize)
         {
             try
@@ -51,6 +53,19 @@ namespace Community.APi.Controllers
                 // Limito el maximo
                 if (pageSize > MaxPageSize)
                     pageSize = MaxPageSize;
+
+                //TODO : 30 - 1 - UserID
+                var identity = this.User.Identity as ClaimsIdentity;
+                System.Security.Claims.Claim iss = null, sub = null;
+                var userId = "";
+                if (identity != null)
+                {
+                    iss = identity.FindFirst("iss");
+                    sub = identity.FindFirst("sub");
+                }
+
+        
+
 
 
                 // calculo paginas

@@ -6,7 +6,7 @@ namespace Community.IdSrv.Config
 {
     public static class Clients
     {
-               public static IEnumerable<Client> Get()
+        public static IEnumerable<Client> Get()
         {
             return new[]
              {
@@ -14,7 +14,7 @@ namespace Community.IdSrv.Config
                 {
                      Enabled = true,
                      ClientId = "mvc",
-                     ClientName = "ExpenseTracker MVC Client (Hybrid Flow)",
+                     ClientName = "Community MVC Client (Hybrid Flow)",
                      Flow = Flows.Hybrid,
                      RequireConsent = true,
 
@@ -25,12 +25,11 @@ namespace Community.IdSrv.Config
                  },
                    new Client
                     {
-                    ClientName = "Expense Tracker Native Client (Implicit Flow)",
+                    ClientName = "Community Native Client (Implicit Flow)",
                     Enabled = true,
                     ClientId = "native",
                     Flow = Flows.Implicit,
                     RequireConsent = true,
-
 
                     ScopeRestrictions = new List<string>
                     {
@@ -38,9 +37,14 @@ namespace Community.IdSrv.Config
                         "roles",
                         "communityapi"
                     },
-
-
-                    }
+                   },   new Client
+                        {
+                            Enabled = true,
+                            ClientName = "Community MVC Client API Access (Client Credentials Flow)",
+                            ClientId = "mvc_api",
+                            ClientSecrets = new List<ClientSecret>() {new ClientSecret("secret".Sha256())},
+                            Flow = Flows.ClientCredentials
+                        }
 
              };
 

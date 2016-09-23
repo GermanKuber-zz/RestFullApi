@@ -12,8 +12,6 @@ namespace Community.APi
     {
         public void Configuration(IAppBuilder app)
         {
-            //TODO : 29 - 6
-
             app.UseResourceAuthorization(new AuthorizationManager());
 
             app.UseIdentityServerBearerTokenAuthentication(new

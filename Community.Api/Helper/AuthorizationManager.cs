@@ -4,7 +4,7 @@ using Thinktecture.IdentityModel.Owin.ResourceAuthorization;
 
 namespace Community.APi.Helper
 {
-    //TODO : 29 - 5 Se implementa ResourceAuthorizationManager
+
     public class AuthorizationManager : ResourceAuthorizationManager
     {
         public override Task<bool> CheckAccessAsync(ResourceAuthorizationContext context)

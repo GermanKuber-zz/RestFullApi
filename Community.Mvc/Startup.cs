@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Security.Claims;
@@ -11,6 +12,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Newtonsoft.Json.Linq;
 using Owin;
+using Thinktecture.IdentityModel.Client;
 
 [assembly: OwinStartup(typeof(Community.Mvc.Startup))]
 
@@ -40,6 +42,7 @@ namespace Community.Mvc
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
                 ResponseType = "code id_token token",
+                //TODO : 30 - 5 - Se elimina 
                 Scope = "openid profile roles communityapi",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
@@ -88,6 +91,23 @@ namespace Community.Mvc
                             .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Issuer);
                         var subjectClaim = n.AuthenticationTicket.Identity
                             .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
+
+
+                        //TODO : 30 - 3 - Se solicitan claims
+                        var oAuth2Client = new OAuth2Client(
+                         new Uri(CommunityConstants.IdSrvToken),
+                         "mvc_api",
+                         "secret");
+
+                        var response = oAuth2Client.RequestClientCredentialsAsync("communityapi").Result;
+
+                        // add the token                        
+                        newIdentity.AddClaim(new Claim("access_token",
+                      response.AccessToken));
+
+
+
+
 
                         newIdentity.AddClaim(new Claim("unique_user_key",
                             issuerClaim.Value + "_" + subjectClaim.Value));

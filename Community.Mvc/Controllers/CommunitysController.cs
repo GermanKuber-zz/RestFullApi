@@ -14,13 +14,12 @@ using Thinktecture.IdentityModel.Mvc;
 
 namespace Community.Mvc.Controllers
 {
-    //TODO : 29 - 3
     [Authorize]
     public class CommunitysController : Controller
     {
 
         //Probamos con usuario Federico
-        //TODO : 29 - 2
+
         //[ResourceAuthorize("Read", "Communitys")]
         public async Task<ActionResult> Index(int? page = 1)
         {

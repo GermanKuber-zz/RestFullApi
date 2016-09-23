@@ -24,17 +24,13 @@ namespace Community.IdSrv.Config
                         }
                     } ,new Scope
                     {
+
                         Name = "communityapi",
                         DisplayName = "Community API Scope",
                         Type = ScopeType.Resource,
                         Emphasize = false,
-                        Enabled = true,
-                        //TODO : 29 - 1 - Se agergan claims de roles
-                        //Install-Package Thinktecture.IdentityModel.Owin.ResourceAuthorization.WebApi
-                        Claims = new List<ScopeClaim>
-                        {
-                            new ScopeClaim("role")
-                        }
+                        Enabled = true
+                        //TODO : 30 - 2 - Se quitan claims
                     },
 
                  };
