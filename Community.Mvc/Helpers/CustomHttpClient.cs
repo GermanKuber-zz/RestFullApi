@@ -16,7 +16,7 @@ namespace Community.Mvc.Helpers
             client.BaseAddress = new Uri(CommunityConstants.ApiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
-                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
             return client;
         }
@@ -27,7 +27,7 @@ namespace Community.Mvc.Helpers
 
 
 
-            client.BaseAddress = new Uri(Constants.CommunityConstants.ApiUrl);
+            client.BaseAddress = new Uri(CommunityConstants.ApiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));

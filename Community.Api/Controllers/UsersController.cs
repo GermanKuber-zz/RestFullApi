@@ -30,7 +30,7 @@ namespace Community.APi.Controllers
             {
                 //Ejemplo : api/users?sort=email&page=1&pagesize=2
                 //api/users?sort=name
-                var users = await this._userService.GetAllAsync();
+                var users = await _userService.GetAllAsync();
 
 
                 // Limito el maximo
@@ -91,7 +91,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-                var user = await this._userService.GetByIdAsync(id);
+                var user = await _userService.GetByIdAsync(id);
                 if (user == null)
                     return NotFound();
 
@@ -114,7 +114,7 @@ namespace Community.APi.Controllers
 
                 var user = UserMapper.Map(model);
 
-                var userUpdate = await this._userService.InserAsync(user);
+                var userUpdate = await _userService.InserAsync(user);
                 if (userUpdate.Status == ActionStatus.Created)
                     return Created(Request.RequestUri + "/" + userUpdate.Entity.Id
                         , UserMapper.Map(userUpdate.Entity));
@@ -136,7 +136,7 @@ namespace Community.APi.Controllers
 
                 var user = UserMapper.Map(model);
 
-                var userUpdate = await this._userService.InserAsync(user);
+                var userUpdate = await _userService.InserAsync(user);
                 if (userUpdate.Status == ActionStatus.Created)
                     return Created(Request.RequestUri + "/" + userUpdate.Entity.Id
                         , UserMapper.Map(userUpdate.Entity));
@@ -245,7 +245,7 @@ namespace Community.APi.Controllers
             try
             {
 
-                var user = await this._userService.GetByIdAsync(id);
+                var user = await _userService.GetByIdAsync(id);
                 if (user == null)
                     return NotFound();
 
@@ -269,7 +269,7 @@ namespace Community.APi.Controllers
             try
             {
 
-                var user = await this._userService.GetByIdAsync(id);
+                var user = await _userService.GetByIdAsync(id);
                 if (user == null)
                     return NotFound();
 

@@ -26,7 +26,6 @@ namespace Community.Mvc
             AntiForgeryConfig.UniqueClaimTypeIdentifier = "unique_user_key";
 
          
-            //TODO: Paso 26 - 6 - Usamos manejador
             app.UseResourceAuthorization(new AuthorizationManager());
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -36,7 +35,6 @@ namespace Community.Mvc
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
             {
-                //TODO: Paso 26 - 3 - Pido roles
                 ClientId = "mvc",
                 Authority = CommunityConstants.IdSrv,
                 RedirectUri = CommunityConstants.ClientUrl,
@@ -77,9 +75,8 @@ namespace Community.Mvc
                         newIdentity.AddClaim(givenNameClaim);
                         newIdentity.AddClaim(familyNameClaim);
 
-                        //TODO: Paso 26 - 4 - Agrego roles a mi identity
-                        //Install-Package Thinktecture.IdentityModel.Owin.ResourceAuthorization
-                  
+             
+                 
                         foreach (var role in roles)
                         {
                             newIdentity.AddClaim(new Claim(

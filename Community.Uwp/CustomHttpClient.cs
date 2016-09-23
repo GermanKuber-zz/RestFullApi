@@ -15,7 +15,7 @@ namespace Community.Uwp
             client.BaseAddress = new Uri("http://localhost:32162/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
-                new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                new MediaTypeWithQualityHeaderValue("application/json"));
 
             return client;
         }

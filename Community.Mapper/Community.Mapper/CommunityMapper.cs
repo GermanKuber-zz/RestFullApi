@@ -17,7 +17,7 @@ namespace Community.Mapper
 
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Core.CommunityTag, CommunityTagViewModel>();
+                cfg.CreateMap<CommunityTag, CommunityTagViewModel>();
                 cfg.CreateMap<Core.Community, CommunityViewModel>();
             });
             var mapper = new AutoMapper.Mapper(config);

@@ -17,7 +17,7 @@ namespace Community.Mvc.Controllers
 
     public class CommunitysController : Controller
     {
-        //TODO: Paso 26 - 7
+
         //Probamos con usuario Federico
 
         [ResourceAuthorize("Read", "Communitys")]
@@ -25,7 +25,7 @@ namespace Community.Mvc.Controllers
         {
 
 
-            var claimsIdentity = this.User.Identity as ClaimsIdentity;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
             var userId = claimsIdentity.FindFirst("unique_user_key").Value;
 
             var client = CustomHttpClient.GetClient();

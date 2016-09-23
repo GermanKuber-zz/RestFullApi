@@ -17,8 +17,8 @@ namespace Community.Repository
 
         public GenericRepository(ICommunityContext context)
         {
-            this.Context = ((CommunityContext)context);
-            this.DbSet = ((CommunityContext)context).Set<TEntity>();
+            Context = ((CommunityContext)context);
+            DbSet = ((CommunityContext)context).Set<TEntity>();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
@@ -87,7 +87,7 @@ namespace Community.Repository
         }
         public virtual async Task<int> SaveAsync()
         {
-            return await this.Context.SaveChangesAsync();
+            return await Context.SaveChangesAsync();
         }
     }
 }

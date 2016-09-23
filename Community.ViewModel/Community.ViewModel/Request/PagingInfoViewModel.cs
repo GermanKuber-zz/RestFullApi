@@ -16,12 +16,12 @@
         public PagingInfoViewModel(int totalCount, int totalPages, int currentPage,
             int pageSize, string previousPageLink, string nextPageLink)
         {
-            this.TotalCount = totalCount;
-            this.TotalPages = totalPages;
-            this.CurrentPage = currentPage;
-            this.PageSize = pageSize;
-            this.PreviousPageLink = previousPageLink;
-            this.NextPageLink = nextPageLink;
+            TotalCount = totalCount;
+            TotalPages = totalPages;
+            CurrentPage = currentPage;
+            PageSize = pageSize;
+            PreviousPageLink = previousPageLink;
+            NextPageLink = nextPageLink;
         }
     }
 }

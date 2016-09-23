@@ -6,7 +6,7 @@ namespace Community.Uwp
     {
         public User()
         {
-            this.Communitys = new List<Community>();
+            Communitys = new List<Community>();
         }
         public int Id { get; set; }
         public string Name { get; set; }

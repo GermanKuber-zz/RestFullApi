@@ -1,6 +1,6 @@
 ﻿namespace Community.Core.Interfaces.Repositorys
 {
-    public interface ICommunityRepository : IGenericRepository<Core.Community>
+    public interface ICommunityRepository : IGenericRepository<Community>
     {
     }
 }

@@ -9,7 +9,7 @@ namespace Community.IdSrv.Config
         public static List<InMemoryUser> Get()
         {
             return new List<InMemoryUser>() {
-            //TODO: Paso 26 - 1 - Agrego roles
+         
                new InMemoryUser
             {
                 Username = "German",

@@ -13,9 +13,9 @@ namespace Community.Uwp
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.DataContext = new MainPageViewModel();
+            DataContext = new MainPageViewModel();
         }
     }
 }

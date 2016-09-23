@@ -9,8 +9,7 @@ namespace Community.IdSrv.Config
         {
             var scopes = new List<Scope>
                 {
-                    //TODO: Paso 26 - 2 - Retorno roles
-                    StandardScopes.OpenId,
+                   StandardScopes.OpenId,
                     StandardScopes.Profile,
                     new Scope
                     {

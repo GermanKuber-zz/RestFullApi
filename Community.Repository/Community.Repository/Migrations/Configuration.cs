@@ -4,7 +4,7 @@ namespace Community.Repository.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Community.Repository.Context.CommunityContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CommunityContext>
     {
         public Configuration()
         {

@@ -20,7 +20,7 @@ namespace Community.Uwp
 
         private void GenerateDummyData()
         {
-            this.Users = new ObservableCollection<User> {
+            Users = new ObservableCollection<User> {
             new User { Name="Facundo", LastName="Primero", Email="facundo@gmail.com", Id=1},
             new User { Name="Ramiro", LastName="Segundo", Email="facundo@gmail.com", Id=2},
             new User { Name="Daniel", LastName="Tercero", Email="facundo@gmail.com", Id=3},

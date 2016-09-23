@@ -36,7 +36,7 @@ namespace Community.APi.Controllers
                 //Ejemplo : /api/Communitys?fields=name%2Cid' (se pasan name y id)
                 //Ejemplo : /api/Communitys?fields=tags' (Propiedad completa de tag)
 
-                var users = await this._communityService.GetAllAsync();
+                var users = await _communityService.GetAllAsync();
 
                 List<string> lstOfFields = new List<string>();
 
@@ -103,7 +103,7 @@ namespace Community.APi.Controllers
         {
             try
             {
-                var data = await this._communityService.GetByIdAsync(id);
+                var data = await _communityService.GetByIdAsync(id);
                 if (data == null)
                     return NotFound();
 
@@ -126,7 +126,7 @@ namespace Community.APi.Controllers
 
                 var user = CommunityMapper.Map(model);
 
-                var userUpdate = await this._communityService.InserAsync(user);
+                var userUpdate = await _communityService.InserAsync(user);
                 if (userUpdate.Status == ActionStatus.Created)
                     return Created(Request.RequestUri + "/" + userUpdate.Entity.Id
                         , CommunityMapper.Map(userUpdate.Entity));
@@ -232,7 +232,7 @@ namespace Community.APi.Controllers
             try
             {
 
-                var db = await this._communityService.GetByIdAsync(id);
+                var db = await _communityService.GetByIdAsync(id);
                 if (db == null)
                     return NotFound();
 
