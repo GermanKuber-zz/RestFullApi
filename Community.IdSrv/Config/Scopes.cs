@@ -30,8 +30,9 @@ namespace Community.IdSrv.Config
                         Type = ScopeType.Resource,
                         Emphasize = false,
                         Enabled = true
-                        //TODO : 30 - 2 - Se quitan claims
                     },
+                    //TODO : Paso 31 - 1 - Soporte fuera de linea
+                      StandardScopes.OfflineAccess
 
                  };
 

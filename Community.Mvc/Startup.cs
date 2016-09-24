@@ -42,8 +42,8 @@ namespace Community.Mvc
                 RedirectUri = CommunityConstants.ClientUrl,
                 SignInAsAuthenticationType = "Cookies",
                 ResponseType = "code id_token token",
-                //TODO : 30 - 5 - Se elimina 
-                Scope = "openid profile roles communityapi",
+                //TODO : Paso 31 - 3 - Se solicita scope
+                Scope = "openid profile roles communityapi offline_access",
 
                 Notifications = new OpenIdConnectAuthenticationNotifications()
                 {
@@ -92,8 +92,6 @@ namespace Community.Mvc
                         var subjectClaim = n.AuthenticationTicket.Identity
                             .FindFirst(Thinktecture.IdentityModel.Client.JwtClaimTypes.Subject);
 
-
-                        //TODO : 30 - 3 - Se solicitan claims
                         var oAuth2Client = new OAuth2Client(
                          new Uri(CommunityConstants.IdSrvToken),
                          "mvc_api",
@@ -106,12 +104,24 @@ namespace Community.Mvc
                       response.AccessToken));
 
 
+                        // use the authorization code to get a refresh token 
+                        var tokenEndpointClient = new OAuth2Client(
+                            new Uri(CommunityConstants.IdSrvToken),
+                            "mvc", "secret");
 
+                        var tokenResponse = await tokenEndpointClient.RequestAuthorizationCodeAsync(
+                            n.ProtocolMessage.Code, CommunityConstants.ClientUrl);
+
+                        //TODO : Paso 31 - 4
+                        newIdentity.AddClaim(new Claim("refresh_token", tokenResponse.RefreshToken));
+                        newIdentity.AddClaim(new Claim("access_token", tokenResponse.AccessToken));
+                        newIdentity.AddClaim(new Claim("expires_at",
+                            DateTime.Now.AddSeconds(tokenResponse.ExpiresIn).ToLocalTime().ToString()));
 
 
                         newIdentity.AddClaim(new Claim("unique_user_key",
                             issuerClaim.Value + "_" + subjectClaim.Value));
-                        newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
+                        //newIdentity.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
 
 
                         n.AuthenticationTicket = new AuthenticationTicket(

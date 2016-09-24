@@ -16,7 +16,7 @@ using Thinktecture.IdentityModel.WebApi;
 
 namespace Community.APi.Controllers
 {
-    //TODO : 30 - 4
+    
 
     [Authorize]
     [RoutePrefix("api")]
@@ -53,8 +53,6 @@ namespace Community.APi.Controllers
                 // Limito el maximo
                 if (pageSize > MaxPageSize)
                     pageSize = MaxPageSize;
-
-                //TODO : 30 - 1 - UserID
                 var identity = this.User.Identity as ClaimsIdentity;
                 System.Security.Claims.Claim iss = null, sub = null;
                 var userId = "";

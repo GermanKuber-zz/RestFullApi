@@ -17,7 +17,14 @@ namespace Community.IdSrv.Config
                      ClientName = "Community MVC Client (Hybrid Flow)",
                      Flow = Flows.Hybrid,
                      RequireConsent = true,
+                     //TODO : Paso 31 - 2 - Tiempo de expiración
+                
+                    AccessTokenLifetime = 60,
 
+                    ClientSecrets = new List<ClientSecret>()
+                    {
+                        new ClientSecret("secret".Sha256())
+                    },
                     RedirectUris = new List<string>
                     {
                         CommunityConstants.ClientUrl
